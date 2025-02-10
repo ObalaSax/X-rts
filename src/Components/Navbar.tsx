@@ -1,33 +1,67 @@
-import Drawer from "@mui/material/Drawer";
+import { ArrowBack, Face2 } from "@mui/icons-material";
 import {
   Box,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Drawer,
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
+  Divider,
 } from "@mui/material";
+import { useState } from "react";
 import { navLinks } from "../Features/Constants/navLinks";
 
 function Navbar() {
+  const [openNav, setOpenNav] = useState(false);
+  const handleOpenNav = () => {
+    setOpenNav(true);
+  };
+  const handleCloseNav = () => {
+    setOpenNav(false);
+  };
   return (
-    <Drawer open={true} variant="permanent" anchor="left">
-      <Box
-        position={"fixed"}
-        bgcolor={"lightblue"}
-        width={"15vw"}
-        justifyItems={"center"}
-      >
-        <List>
-          {navLinks.map((navItem) => (
-            <ListItem disablePadding key={navItem.id}>
-              <ListItemButton>
-                <ListItemText primary={navItem.navTitle} />
-              </ListItemButton>
+    <Box>
+      <AppBar position="fixed" color="primary">
+        {/*-----MY NAVBAR------*/}
+        <Toolbar>
+          <Box>
+            <IconButton
+              onClick={handleOpenNav}
+              sx={{ color: "white", background: "green" }}
+            >
+              <Face2 />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Drawer open={openNav} anchor={"left"} onClose={handleCloseNav}>
+        <Box>
+          <IconButton onClick={handleCloseNav}>
+            <ArrowBack />
+          </IconButton>
+          <List>
+            {navLinks.map((navLinks) => (
+              <ListItem>
+                <ListItemButton>
+                  <ListItemIcon>{navLinks.navIcon}</ListItemIcon>
+                  <ListItemText primary={navLinks.navTitle} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            <ListItem>
+              <ListItemButton>Noma</ListItemButton>
             </ListItem>
-          ))}
-        </List>
-      </Box>
-    </Drawer>
+          </List>
+        </Box>
+      </Drawer>
+    </Box>
   );
 }
 
